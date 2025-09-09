@@ -1,0 +1,575 @@
+\documentclass[10pt]{book}
+\usepackage[a5paper,%This enables easy large-letter editions (A4)
+bindingoffset=5mm,%having an inner margin offset prevents text falling into the gutter
+inner=20mm,
+outer=20mm,
+top=20mm,
+bottom=20mm,
+twoside,
+heightrounded]{geometry}
+
+%Basic English formatting:
+	\frenchspacing %Prevents the silly double space after each sentence
+	\usepackage{pifont} %Needed for \ding characters (for the crosses mainly)
+	\usepackage{ebgaramond} %Standard open source font
+	\setlength{\parindent}{1em}
+	
+%To ensure language compatibility.
+	\usepackage[utf8]{inputenc}
+	\usepackage[greek,latin,british]{babel}
+
+%To change tracking and tighten up spacing:
+	\usepackage{microtype}
+
+%Makes sure odd pages are on the right when moving between page number types.
+	\usepackage[strict]{changepage}
+	\usepackage{scrextend}
+	
+%URL
+	\usepackage[hidelinks]{hyperref}	
+
+%Page Headers
+	\usepackage{fancyhdr}
+	\pagestyle{fancy}
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt} %Prevent line at top of page
+	\fancyfoot[C]{\thepage}
+%Prevents chapter from resetting page layout
+	\fancypagestyle{plain}{
+		\fancyhf{}
+		\fancyfoot[C]{}
+		\renewcommand{\headrulewidth}{0pt}}
+
+%Change section format:
+\setcounter{secnumdepth}{0} %Remove section numbering
+	\usepackage{titlesec}
+	\titleformat{\section} % Command to modify
+		{\Large \normalfont \centering} % Format
+  		{} % No label (removes number)
+  		{0pt} % Spacing between label and title (irrelevant here since no label)
+  		{}
+	
+	\titleformat{\subsection}
+	{\normalsize\bfseries\scshape\centering}
+  	{}
+  	{0pt}
+	{}
+	
+	\titleformat{\subsubsection}
+	{\normalsize\centering\itshape}
+  	{}
+  	{0pt}
+	{}
+
+%Colour \& Images
+
+	%Image Configuration
+	\usepackage{graphicx}
+	\graphicspath{{resources/images}}
+	\usepackage{wrapfig}
+	\usepackage{epsfig}
+
+	%Enables text under image without caption.
+	\usepackage{caption}
+	\captionsetup[figure]{labelformat=empty,justification=centering}
+	\usepackage{float}
+
+	%Colour
+	\usepackage[svgnames,dvipsnames]{xcolor}
+
+	%Changes to the Table of Contents
+	\addto\captionsbritish{\renewcommand{\contentsname}{Table of Contents}}
+	\setcounter{tocdepth}{1} %Only chapters & sections are added to the TOC
+	\usepackage{tocloft}
+	\setlength{\cftbeforetoctitleskip}{-8ex}
+
+	%For quotations in the Foreword and Editor's Preface:
+	\usepackage{quoting}
+
+	%For the signature in the Preface \& Margins
+	\usepackage{ragged2e}
+
+	%For the Chant Notation
+	\usepackage[autocompile]{gregoriotex}
+	%I'm not sure what this does.
+	\gresetheadercapture{initial-style}{gresetinitiallines}{}
+
+%Rubrics:
+	%Colour for print:
+	\definecolor{RubricRed}{cmyk}{0, 1, 1, 0.25}
+
+	%For black words in rubrics.
+	\newcommand{\blackrubric}[1]{{\color{black}#1}}
+	
+	%Heading Rubrics
+	\newenvironment{inhead}{\par\centering\color{RubricRed}\small\smallskip\ignorespaces}
+	{\par\normalsize\smallskip\ignorespacesafterend}
+	
+	%Normal Rubrics
+	\newenvironment{rubric}{\par\smallskip\par\noindent\color{RubricRed}\small\ignorespaces\P}
+		{\par\normalsize\smallskip\ignorespacesafterend}
+		
+	%For rubrics right after sections
+	\newenvironment{secrubric}{\par\noindent\small\ignorespaces\color{RubricRed}\P}
+	{\par\normalsize\smallskip\ignorespacesafterend}
+	
+	%Inline Rubric
+	\newcommand{\inrub}[1]{{{\color{RubricRed}\small(#1)}}}
+	
+	%Determine Marginnote parameters
+	\setlength{\marginparwidth}{15mm} % Set the width of the margin note
+	\setlength{\marginparsep}{2mm} % Set the spacing between the margin note and the text
+	\usepackage{marginnote}
+
+	%Margin Rubric on Odd Pages
+	
+	\newcounter{alphacount} %Counter to convert number to letter
+\newcommand{\margrub}[2]{\setcounter{alphacount}{#1}\textsuperscript{\alph{alphacount}}%
+	\marginpar{\begin{minipage}{0.65\marginparwidth}
+	\sloppy%
+	\itshape%
+	\scriptsize%
+	\textsuperscript{\alph{alphacount}}%
+	#2
+	\fussy
+	\end{minipage}}
+  \hspace{-0.2em}}
+ 
+  
+  	%Margin Rubric on Even Pages
+  \newcommand{\margrubleft}[2]{\setcounter{alphacount}{#1}\textsuperscript{\alph{alphacount}}%
+	\marginpar{\RaggedLeft%
+	\sloppy%
+	\itshape%
+	\scriptsize%
+	\textsuperscript{\alph{alphacount}}%
+	#2%
+	\fussy}
+  	\hspace{-0.2em}}
+  
+  	%Margin Rubric in Column Contexts (English Column)
+  \newcommand{\margcolrub}[2]{\setcounter{alphacount}{#1}%
+	\textsuperscript{\alph{alphacount}}%
+	\Ifthispageodd{\reversemarginpar
+	\marginpar{%
+	\raggedright%
+	\sloppy%
+	\itshape%
+	\scriptsize%
+	    \textsuperscript{\alph{alphacount}}%
+	    #2\hspace{-0.2em}%
+	    \fussy}
+	    }{\normalmarginpar
+	    \marginpar{%
+		\raggedleft%
+		\sloppy%
+		\itshape%
+		\scriptsize%
+		\textsuperscript{\alph{alphacount}}%
+	    #2\hspace{-0.2em}%
+	    \fussy}}}
+  
+  %Really just a placeholder in case it becomes relevant later in the latin side of a double column:
+  \newcommand{\marglatincolrub}[2]{\setcounter{alphacount}{#1}\textsuperscript{\alph{alphacount}}\hspace{-0.2em}}
+	
+		%Margin Rubric without letter/number.
+	  \newcommand{\margy}[1]{\marginpar{\RaggedRight%
+		\sloppy%
+		\itshape%
+		\scriptsize%
+		#1%
+		\fussy}}
+		
+		%Margin Rubric without letter/number, on the left side (even numbered page).
+	  	\newcommand{\margyleft}[1]{\marginpar{\RaggedLeft%
+		\sloppy%
+		\itshape%
+		\scriptsize%
+		#1%
+		\fussy}}
+  
+  
+		
+	  
+	%Kalendar \& Lectionary
+	\usepackage{array}
+	\usepackage{longtable} %Allows lectionary cells to go over multiple pages
+	\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+	\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+	
+		%Lectionary Evensong
+		\newcommand{\evensong}[1]{Evensong}
+	
+	%Scriptural Citations in Mass
+	\newcommand{\vr}[1]{{\footnotesize{ (#1)}}}
+	
+	%Disable \vr
+	\newcommand{\novr}[1]{}
+	
+	%Invitatory
+	\newcommand{\inv}[1]{{\color{RubricRed}#1.}}
+
+%Propers:
+
+	%Drop Caps (And specifies a specific folder for normal lettrine images):
+	\usepackage{lettrine}
+	\newcommand{\lett}[2]{\lettrine[image=true,realheight=true,lines=3]{dropcaps/#1.png}{{\lowercase{#2}}}}
+	
+	%If no second or third lines, and line amount might be doubtful, then this is used to ensure adequate spacing.
+	\newcommand{\lettspace}[0]{\ifnum\prevgraf=1
+		\vspace{2\baselineskip}
+			\else
+				\ifnum\prevgraf=2
+					\vspace{1\baselineskip}
+				\fi
+			\fi}
+	
+	
+	%Ensure that short paragraphs don't lead to text moving into drop cap.
+	
+	\newcounter{thirdlinecounter} %Counter to tell thirdline how many paragraphs precede it.
+	\newcommand{\secondline}[1]{%
+		\ifnum\prevgraf>2 %If there are over two lines in the previous paragraph (3), then we don't need to adjust anything, and it is put as is.
+			#1\par
+			\setcounter{thirdlinecounter}{3}
+		\else
+			\ifnum\prevgraf=2%If there are only two lines, then we only need to do an indent.
+				\parindent=3.25em
+				#1\par
+            	\parindent=1em%Reset indent to normal
+            	\setcounter{thirdlinecounter}{2}
+			\else
+				\ifnum\prevgraf=1%If the lett paragraph is only one line, then we need to cause the entirety of the next paragraph to be indented.
+				\noindent
+				\leftskip=3.25em
+				#1\par
+				\leftskip=0em%Reset indent to normal
+				\setcounter{thirdlinecounter}{1}
+					\else%In case something is not caught.
+						#1
+						\setcounter{thirdlinecounter}{3}
+						\par
+				\fi
+			\fi
+		\fi}
+	
+	%Make sure proper formatting for the third line.
+	\newcommand{\thirdline}[1]{\addtocounter{thirdlinecounter}{\prevgraf}%
+		\ifnum\thethirdlinecounter=2%If there are only two lines preceding (one line of the lett and one line of the secondline
+    		\parindent=3.25em
+    		#1\par
+    		\parindent=1em
+				\else
+	    		#1\par
+		\fi}
+	
+	\usepackage[super]{nth} %To add superscript to ordinal numeral.
+	
+	%Rank, Date, Name for Feast Days
+	\newcommand{\festival}[3]{\par\subsection{#2. #3}
+	
+	\begin{inhead}
+		#1
+	\end{inhead}}
+	
+	%Headings for the Propers
+	\newcommand{\feastday}[1]{\fancyhead[RO,LE]{\textit{#1}}} %Feast Name
+	
+	\newcommand{\feastdate}[2]{\fancyhead[RE,LO]{#1 #2}} %Feast Date
+	
+	%Psalm Numbers
+	\newcommand{\psanum}[1]{{\small{#1}} }
+	
+	%For drawing boxes around unapproved text:
+	\usepackage[most]{tcolorbox}
+	
+	%To make sure versicle and response start with indent.
+	\usepackage{indentfirst}
+
+	%To create hanging indent for Hymns.
+	\usepackage{hanging}
+	
+	%Introit
+	\newcommand{\introit}[0]{\subsubsection{Introit}}
+	
+	%Collect
+	\newcommand{\collect}[0]{\subsubsection{Collect}}
+
+	%Readings
+	\newcommand{\readingcitation}[2]{\subsubsection{#1. \emph{#2}}}
+	
+	%Divine Name in Readings
+	\newcommand{\divineName}[1]{\textsc{\lowercase{#1}}}
+	
+	%Gradual \& Alleluia
+	\newcommand{\gradall}[2]{\gradual{#1}\par\alleluia{#2}}
+	
+	%Gradual \& Tract
+	\newcommand{\gradtr}[2]{\gradual{#1}\par\tract{#2}}
+	
+	%Alleluia Verse
+	\newcommand{\alleluia}[1]{\vspace{1ex}\par\noindent
+		\emph{Alleluia.} #1}
+	%Gradual
+	\newcommand{\gradual}[1]{\vspace{1ex}\par\noindent
+		\emph{Gradual.} #1}
+		
+	%Tract
+	\newcommand{\tract}[1]{\vspace{1ex}\par\noindent
+		\emph{Tract.} #1}
+		
+    %Offertory
+    \newcommand{\offertory}[1]{\vspace{1ex}\par\noindent
+		\emph{Offertory.} #1}
+		
+	%Secret
+	\newcommand{\secret}[0]{\subsubsection{Secret}}
+
+	%Communion
+	\newcommand{\communion}[1]{\vspace{1ex}\par\noindent
+    	\emph{Communion.} #1}
+	
+	%Postcommunion
+	\newcommand{\postcommunion}[0]{\subsubsection{Postcommunion}}
+		
+	%Antiphons
+	\newcommand{\antiphon}[2]{{\centering \textit{#1 Ant.} #2}}
+
+\usepackage{paracol} %To provide balanced English-Latin dual paragraphs
+\usepackage[grid]{multicol} %For non bilingual dual columns.
+\setlength\columnseprule{0.4pt} %Controls the width of the line between columns
+
+%Prevent lettrine misalignment:
+\raggedbottom
+
+%English-Latin Double Column
+\newcommand{\elcol}[2]{\sloppy
+	\begin{paracol}{2}
+		\begin{leftcolumn}
+			#1
+		\end{leftcolumn}
+		\begin{rightcolumn}
+			\selectlanguage{latin}%
+			#2
+		\end{rightcolumn}
+		\switchcolumn*
+	\end{paracol}
+\selectlanguage{british}
+\fussy}
+
+%English-Latin Non-Indented Column
+\newcommand{\elcoldent}[2]{\sloppy
+	\begin{paracol}{2}
+		\begin{leftcolumn}
+		\noindent%
+			#1	
+		\end{leftcolumn}
+		\begin{rightcolumn}
+                \selectlanguage{latin}%
+			\noindent
+			#2
+		\end{rightcolumn}
+		\switchcolumn*
+	\end{paracol}
+\selectlanguage{british}
+\fussy}
+
+%For difference between through the year and in eastertide:
+\newcommand{\ttyie}[2]{\sloppy
+	\begin{paracol}{2}
+		\begin{leftcolumn}\noindent
+			#1	
+		\end{leftcolumn}
+		\begin{rightcolumn}\noindent
+			#2
+		\end{rightcolumn}
+		\switchcolumn*
+	\end{paracol}
+\selectlanguage{british}
+\fussy}
+
+%Expedites adding dual language Oremus/Let Us Pray
+\newcommand{\oremus}[0]{\par
+	\begin{paracol}{2}
+		\begin{leftcolumn}
+			\selectlanguage{british}\noindent%
+			\centerline{\textit{Let us pray.}}
+		\end{leftcolumn}
+		\begin{rightcolumn}
+			\selectlanguage{latin}\noindent%
+			\centerline{\textit{Orémus.}}
+		\end{rightcolumn}
+		\switchcolumn*
+	\end{paracol}
+\selectlanguage{british}}
+
+%Does the same as above, but for single language collects:
+\newcommand{\letuspray}[0]{\par\noindent
+	\centerline{\textit{Let us pray.}}
+	\par}
+
+\newcommand{\oremuslatin}[0]{\par\noindent
+	\centerline{\textit{Orémus.}}
+	\par}
+	
+	
+
+	
+\begin{document}
+\begin{titlepage}
+		\begin{center}
+			{\Large{The Book of}}
+			\par
+			\vspace{3mm}
+			{\Huge{\scshape Common Prayer}}
+			\par
+			\vspace{3mm}
+			{\Large{and Administration of the}}
+			\par
+			\vspace{3.5mm}
+			{\Huge{\scshape Sacraments,}}
+			\par
+			\vspace{3mm}
+			{\large{and other}}
+			\par
+			\vspace{3.5mm}
+			{\Huge{\scshape Rites and Ceremonies}}
+			\par
+			\vspace{3.5mm}
+			{\large{of the}}
+			\par
+			\vspace{3mm}
+			{\Huge{\scshape Church}}
+			\par
+			\vspace{3.5mm}
+            {\large{Proposed for the Use in}}
+			\par
+			\vspace{3mm}
+			{\Huge{\scshape the Antiochian}}
+            \par
+			\vspace{3mm}
+            {\Huge{\scshape Western Rite Vicariate}}
+            \par
+			\vspace{2mm}
+   		 	\centerline{\rule{0.5\textwidth}{0.4pt}}
+			\par
+			\vspace{4mm}
+			{\LARGE{Together with the Psalter}}
+			\par
+			\vspace{3mm}
+			{\large{or}}
+			\par
+			\vspace{3.5mm}
+			{\LARGE{Psalms of David}}
+   \par
+   \end{center}
+            
+            \vfill
+            
+           \begin{figure}[H]
+            	\centering
+            	\includegraphics[scale=.15]{logo.eps}
+            	\caption{\scshape Apologia Anglicana\\Boston, Massachusetts\\
+				A. D. MMXXV}
+            \end{figure}
+		
+	\end{titlepage}
+\cleardoublepage
+\frontmatter
+\tableofcontents
+\addtocontents{toc}{\vspace{-3ex}}%
+\cleardoublepage
+%Front Matter
+\include{pages/Front/Copyright}
+\include{pages/Front/Dedication}
+\include{pages/Front/Foreword}
+\include{pages/Front/EditorsPreface}
+\include{pages/Front/Rubrics}
+\include{pages/Front/Kalendar}
+%Lectionary
+\cleardoublepage
+\include{pages/Lectionary/LectionaryCover}
+\include{pages/Lectionary/Lectionary}
+\include{pages/Lectionary/AlternativePsalter}
+%Daily Office
+\cleardoublepage
+\include{pages/Office/DailyOfficeCover}
+\include{pages/Office/ForeOffice}
+\include{pages/Office/Mattins}
+\include{pages/Office/OTCant}
+\include{pages/Office/Prime}
+\include{pages/Office/Pretiosa}
+\include{pages/Office/CommemorationDeparted}
+\include{pages/Office/Athanasian}
+\include{pages/Office/Terce}
+\include{pages/Office/Sext}
+\include{pages/Office/None}
+\include{pages/Office/Evensong}
+\include{pages/Office/Compline}
+\include{pages/Office/Mary}
+%Prayers \& Thanksgivings
+\cleardoublepage
+\include{pages/Prayers/PrayersCover}
+\include{pages/Prayers/PrayersThanksgivings}
+%Litanies \& Offices
+\cleardoublepage
+\include{pages/Litanies/LitaniesCover}
+\include{pages/Litanies/GreatLitany}
+\include{pages/Litanies/Penitential}
+\include{pages/Litanies/BaptismalBlessing}
+\include{pages/Litanies/LitanySaints}
+%Office of the Dead
+\cleardoublepage
+\include{pages/OfficeDead/OfficeDeadCover}
+\include{pages/OfficeDead/VesperDead}
+\include{pages/OfficeDead/MatinsDead}
+\include{pages/OfficeDead/LaudsDead}
+%Eucharistic Devotions
+\cleardoublepage
+\include{pages/Eucharistic/EucharisticCover}
+\include{pages/Eucharistic/Benediction}
+\include{pages/Eucharistic/Preparation}
+\include{pages/Eucharistic/Thanksgiving}
+\include{pages/Eucharistic/Asperges}
+\include{pages/Eucharistic/ForeMass}
+%Holy Mass
+\cleardoublepage
+\include{pages/HolyMass/MassCover}
+\include{pages/HolyMass/Mass}
+\include{pages/HolyMass/PreCommunionHymn}
+\include{pages/HolyMass/Prefaces}
+%Propers
+\cleardoublepage
+\include{pages/Propers/PropersCover}
+\include{pages/Propers/PropSeas}
+\include{pages/Propers/PropTime}
+\include{pages/Propers/Seasonal}
+%Votive Masses
+\cleardoublepage
+\include{pages/Votives/VotiveCover}
+\include{pages/Votives/Votive}
+%Pastoral Rites
+\cleardoublepage
+\include{pages/Pastoral/PastoralCover}
+\include{pages/Pastoral/Baptism}
+\include{pages/Pastoral/AdultBaptism}
+\include{pages/Pastoral/Confession}
+\include{pages/Pastoral/Reception}
+\include{pages/Pastoral/Confirmation}
+\include{pages/Pastoral/Matrimony}
+\include{pages/Pastoral/Purification}
+\include{pages/Pastoral/Unction}
+\include{pages/Pastoral/CommunionOfTheSick}
+\include{pages/Pastoral/Burial}
+\include{pages/Pastoral/BurialChild}
+%Family Prayers
+\cleardoublepage
+\include{pages/Family/FamilyCover}
+\include{pages/Family/Family}
+%Psalter of David
+\cleardoublepage
+\include{pages/Psalter/PsalterCover}
+\include{pages/Psalter/Psal}
+%Back Cover
+\include{pages/Back}
+\end{document}
