@@ -413,7 +413,15 @@ heightrounded]{geometry}
 	\par}
 	
 	
-
+	
+%Copyright page settings
+\fancypagestyle{copyrightpage}{\fancyhf{}
+\fancyhead[C]{{\LARGE Copyright}}
+\fancyfoot[C]{}}
+\fancypagestyle{copyrightpagee}{\fancyhf{}
+\fancyhead[C]{}
+\fancyfoot[C]{}}
+	
 	
 \begin{document}
 \begin{titlepage}
@@ -474,16 +482,24 @@ heightrounded]{geometry}
             \end{figure}
 		
 	\end{titlepage}
-\cleardoublepage
+\clearpage
+\include{pages/Front/Copyright}
+\clearpage
+\thispagestyle{empty}
+\vfill
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=103mm, height=138.450mm]{PeterPaulJohn.eps}
+\end{figure}
+\clearpage
+%Front Matter
 \frontmatter
 \tableofcontents
-\addtocontents{toc}{\vspace{-3ex}}%
-\cleardoublepage
-%Front Matter
-\include{pages/Front/Copyright}
+\clearpage
 \include{pages/Front/Dedication}
 \include{pages/Front/Foreword}
 \include{pages/Front/EditorsPreface}
+\cleardoublepage
 \include{pages/Front/Rubrics}
 \include{pages/Front/Kalendar}
 %Lectionary
