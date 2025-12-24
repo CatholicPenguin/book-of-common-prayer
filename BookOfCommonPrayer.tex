@@ -192,6 +192,10 @@ heightrounded]{geometry}
 		
 	  
 	%Kalendar \& Lectionary
+	\usepackage{tabularray}
+	\DefTblrTemplate{caption}{default}{}     % Removes any caption (including "Table X:")
+	\DefTblrTemplate{capcont}{default}{}     % Removes continuation caption on subsequent pages
+	\DefTblrTemplate{contfoot-text}{default}{}  % Removes "Continued on next page" text
 	\usepackage{array}
 	\usepackage{longtable} %Allows lectionary cells to go over multiple pages
 	\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
@@ -450,7 +454,7 @@ heightrounded]{geometry}
 			{\Huge{\scshape Church}}
 			\par
 			\vspace{3.5mm}
-            {\large{Proposed for the Use in}}
+            {\large{According to the Use in}}
 			\par
 			\vspace{3mm}
 			{\Huge{\scshape the Antiochian}}
@@ -478,7 +482,7 @@ heightrounded]{geometry}
             	\centering
             	\includegraphics[scale=.15]{logo.eps}
             	\caption{\scshape Apologia Anglicana\\Boston, Massachusetts\\
-				A. D. MMXXV}
+				A. D. MMXXVI}
             \end{figure}
 		
 	\end{titlepage}
@@ -486,6 +490,9 @@ heightrounded]{geometry}
 \include{pages/Front/Copyright}
 \clearpage
 \thispagestyle{empty}
+
+{\color{White}.}
+
 \vfill
 \begin{figure}[H]
     \centering
