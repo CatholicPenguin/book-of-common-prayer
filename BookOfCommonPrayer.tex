@@ -73,6 +73,15 @@ heightrounded]{geometry}
 
 	%Colour
 	\usepackage[svgnames,dvipsnames]{xcolor}
+	
+	%Liturgical Colours:
+	\definecolor{SarumBlue}{cmyk}{0.95, 0.74, 0.07, 0.44}
+	\definecolor{LentenViolet}{cmyk}{0.36, 0.65, 0, 0.5}
+	\definecolor{GreenSeason}{cmyk}{0.73, 0.40, 0.73, 0.27}
+	\definecolor{FestiveWhite}{cmyk}{0.30, 0.40, 0.9, 0.25}
+	\definecolor{MartyrRed}{cmyk}{0, 0.6, 0.6, 0.55}
+	\definecolor{MournfulBlack}{cmyk}{0.4, 0.3, 0.3, 1}
+	\definecolor{JoyfulRose}{cmyk}{0.27, 0.74, 0.59, 0.25}
 
 	%Changes to the Table of Contents
 	\addto\captionsbritish{\renewcommand{\contentsname}{Table of Contents}}
@@ -266,8 +275,31 @@ heightrounded]{geometry}
 	
 	\usepackage[super]{nth} %To add superscript to ordinal numeral.
 	
+	%To indicate Seasons in the Proper of Season:
+	
+	\newcommand{\seasonSection}[1]{\section{#1}}
+	
+	%Heading for each individual day in the Proper of Season
+	
+	\newcommand{\seasonSubsection}[3]{\subsection{{\color{#3}#2}}
+	\begin{inhead}
+		#1
+	\end{inhead}}
+	
+	%For Proper of Season days with dates
+	\newcommand{\seasonalFestival}[4]{\subsection{{\color{#4}#2. #3}}
+	\begin{inhead}
+		#1
+	\end{inhead}}
+	
+	%Special Proper of Season without inhead nor date
+	\newcommand{\seasonalFestivalNoHead}[2]{\subsection{{\color{#2}#1}}}
+	
+		%Special Proper of Season without inhead nor date
+	\newcommand{\seasonalFestivalDateNoHead}[3]{\subsection{{\color{#3}#1. #2}}}
+
 	%Rank, Date, Name for Feast Days
-	\newcommand{\festival}[3]{\par\subsection{#2. #3}
+	\newcommand{\festival}[4]{\par\subsection{{\color{#4}#2. #3}}
 	
 	\begin{inhead}
 		#1
@@ -417,7 +449,6 @@ heightrounded]{geometry}
 	\par}
 	
 	
-	
 %Copyright page settings
 \fancypagestyle{copyrightpage}{\fancyhf{}
 \fancyhead[C]{{\LARGE Copyright}}
@@ -514,14 +545,17 @@ heightrounded]{geometry}
 \include{pages/Front/Rubrics}
 \include{pages/Front/OrderPsalms}
 \include{pages/Front/TableYear}
+\cleardoublepage
 \include{pages/Front/Ranking}
+\cleardoublepage
 \include{pages/Front/Kalendar}
 %Lectionary
 \cleardoublepage
 \include{pages/Lectionary/LectionaryCover}
 \include{pages/Lectionary/Lectionary}
 \include{pages/Lectionary/LectionaryFestivals}
-\include{pages/Lectionary/LectionaryAdditional}
+%Turn into handout?:
+%\include{pages/Lectionary/LectionaryAdditional}
 \include{pages/Lectionary/LectionaryCommon}
 \include{pages/Lectionary/AlternativePsalter}
 %\include{pages/Lectionary/DevotionalPsalms}
@@ -551,7 +585,6 @@ heightrounded]{geometry}
 \include{pages/Litanies/GreatLitany}
 \include{pages/Litanies/Penitential}
 \include{pages/Litanies/LitanySaints}
-\include{pages/Litanies/BaptismalBlessing}
 %Office of the Dead
 \cleardoublepage
 \include{pages/OfficeDead/OfficeDeadCover}
@@ -592,6 +625,7 @@ heightrounded]{geometry}
 %Pastoral Rites
 \cleardoublepage
 \include{pages/Pastoral/PastoralCover}
+\include{pages/Litanies/BaptismalBlessing}
 \include{pages/Pastoral/Baptism}
 \include{pages/Pastoral/AdultBaptism}
 \include{pages/Pastoral/Confession}
