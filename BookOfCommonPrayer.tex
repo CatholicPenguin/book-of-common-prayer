@@ -16,7 +16,7 @@ heightrounded]{geometry}
 	
 %To ensure language compatibility.
 	\usepackage[utf8]{inputenc}
-	\usepackage[greek,latin,british]{babel}
+	\usepackage[greek,ecclesiasticallatin.usej,british]{babel}
 
 %To change tracking and tighten up spacing:
 	\usepackage{microtype}
@@ -78,7 +78,8 @@ heightrounded]{geometry}
 	\definecolor{SarumBlue}{cmyk}{0.95, 0.74, 0.07, 0.44}
 	\definecolor{LentenViolet}{cmyk}{0.36, 0.65, 0, 0.5}
 	\definecolor{GreenSeason}{cmyk}{0.73, 0.40, 0.73, 0.27}
-	\definecolor{FestiveWhite}{cmyk}{0.30, 0.40, 0.9, 0.25}
+	%\definecolor{FestiveWhite}{cmyk}{0.30, 0.40, 0.9, 0.25}
+	\definecolor{FestiveWhite}{cmyk}{0, 0.22, 0.79, 0.13}
 	\definecolor{MartyrRed}{cmyk}{0, 0.6, 0.6, 0.55}
 	\definecolor{MournfulBlack}{cmyk}{0.4, 0.3, 0.3, 1}
 	\definecolor{JoyfulRose}{cmyk}{0.27, 0.74, 0.59, 0.25}
@@ -211,7 +212,7 @@ heightrounded]{geometry}
 		\newcommand{\evensong}[1]{Evensong}
 	
 	%Scriptural Citations in Mass
-	\newcommand{\vr}[1]{{\footnotesize{ (#1)}}}
+	\newcommand{\vr}[1]{{\footnotesize{ {\color{RubricRed}(#1)}}}}
 	
 	%Disable \vr
 	\newcommand{\novr}[1]{}
@@ -385,7 +386,7 @@ heightrounded]{geometry}
 			#1
 		\end{leftcolumn}
 		\begin{rightcolumn}
-			\selectlanguage{latin}%
+			\selectlanguage{ecclesiasticallatin}%
 			#2
 		\end{rightcolumn}
 		\switchcolumn*
@@ -401,7 +402,7 @@ heightrounded]{geometry}
 			#1	
 		\end{leftcolumn}
 		\begin{rightcolumn}
-                \selectlanguage{latin}%
+                \selectlanguage{ecclesiasticallatin}%
 			\noindent
 			#2
 		\end{rightcolumn}
@@ -432,7 +433,7 @@ heightrounded]{geometry}
 			\centerline{\textit{Let us pray.}}
 		\end{leftcolumn}
 		\begin{rightcolumn}
-			\selectlanguage{latin}\noindent%
+			\selectlanguage{ecclesiasticallatin}\noindent%
 			\centerline{\textit{Orémus.}}
 		\end{rightcolumn}
 		\switchcolumn*
